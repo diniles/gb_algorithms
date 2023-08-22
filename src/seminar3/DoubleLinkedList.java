@@ -1,6 +1,6 @@
 package seminar3;
 
-public class DoubleLinkedList {
+public class DoubleLinkedList<T> {
 
     private Node<T> head;
     private Node<T> tail;
@@ -34,7 +34,6 @@ public class DoubleLinkedList {
         }
     }
 
-
     class Node<T> {
         T data;
         Node<T> prev;
@@ -46,6 +45,4 @@ public class DoubleLinkedList {
             this.next = null;
         }
     }
-
-
 }
