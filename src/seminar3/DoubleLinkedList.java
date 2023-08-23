@@ -11,7 +11,7 @@ public class DoubleLinkedList<T> {
     }
 
     public void addToStart(T data) {
-        Node<T> node = new Node<T>(data);
+        Node<T> node = new Node<>(data);
         if (head == null) {
             head = node;
             tail = node;
@@ -23,20 +23,19 @@ public class DoubleLinkedList<T> {
     }
 
     public void addToEnd(T data) {
-        Node<T> node = new Node<T>(data);
+        Node<T> node = new Node<>(data);
         if (tail == null) {
             head = node;
-            tail = node;
         } else {
             node.prev = tail;
             tail.next = node;
-            tail = node;
         }
+        tail = node;
     }
 
     public void reverse() {
         Node<T> current = head;
-        Node<T> temp = null;
+        Node<T> temp;
 
         while (current != null) {
             temp = current.prev;
@@ -52,7 +51,7 @@ public class DoubleLinkedList<T> {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        Node node = head;
+        Node<T> node = head;
         while (node != null) {
             stringBuilder.append(node.data);
             node = node.next;
@@ -62,7 +61,7 @@ public class DoubleLinkedList<T> {
         return stringBuilder.toString();
     }
 
-    class Node<T> {
+    static class Node<T> {
         T data;
         Node<T> prev;
         Node<T> next;

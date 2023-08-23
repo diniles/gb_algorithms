@@ -14,12 +14,12 @@ public class Main {
         bandsList.addToEnd(motorhead);
 
         System.out.println("Original list");
-        System.out.println(bandsList.toString());
+        System.out.println(bandsList);
         System.out.println();
 
         bandsList.reverse();
 
         System.out.println("Reversed list");
-        System.out.println(bandsList.toString());
+        System.out.println(bandsList);
     }
 }
