@@ -24,4 +24,12 @@ public class Band {
     public void setFormedDate(int formedDate) {
         this.formedDate = formedDate;
     }
+
+    @Override
+    public String toString() {
+        return "Band{" +
+                "bandName='" + bandName + '\'' +
+                ", formedDate=" + formedDate +
+                '}';
+    }
 }
