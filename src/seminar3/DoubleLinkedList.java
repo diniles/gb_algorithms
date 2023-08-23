@@ -49,6 +49,19 @@ public class DoubleLinkedList<T> {
         tail = temp;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Node node = head;
+        while (node != null) {
+            stringBuilder.append(node.data);
+            node = node.next;
+            if (node != null)
+                stringBuilder.append('\n');
+        }
+        return stringBuilder.toString();
+    }
+
     class Node<T> {
         T data;
         Node<T> prev;
