@@ -1,6 +1,7 @@
 package seminar4;
 
 import java.util.Iterator;
+import java.util.Map;
 
 public class HashMap<K, V> implements Iterable<HashMap.Entity> {
     private static final int INIT_BUCKET_COUNT = 16;
@@ -141,4 +142,25 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
             return null;
         }
     }
+
+    private int calculateBucketIndex(K key) {
+        return Math.abs(key.hashCode()) % buckets.length;
+    }
+
+    private void recalculate() {
+        size = 0;
+        Bucket[] old = buckets;
+        buckets = new HashMap.Bucket[old.length * 2];
+        for (int i = 0; i < old.length; i++) {
+            Bucket bucket = old[i];
+            if (bucket != null) {
+                Bucket.Node node = bucket.head;
+                while (node != null) {
+                    put(node.value.key, node.value.value);
+                    node = node.next;
+                }
+            }
+        }
+    }
+    
 }
