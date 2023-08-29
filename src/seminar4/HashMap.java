@@ -1,6 +1,7 @@
 package seminar4;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class HashMap<K, V> implements Iterable<HashMap.Entity> {
 
@@ -29,15 +30,49 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
          *
          * @return
          */
+        private int currentBucketIndex;
+        private Bucket.Node currentNode;
+
+        public HashMapIterator() {
+            currentBucketIndex = 0;
+            currentNode = null;
+            findNextValidNode();
+        }
+
+        private void findNextValidNode() {
+            while (currentBucketIndex < buckets.length) {
+                Bucket currentBucket = buckets[currentBucketIndex];
+                if (currentBucket != null) {
+                    if (currentNode == null) {
+                        currentNode = currentBucket.head;
+                    } else {
+                        currentNode = currentNode.next;
+                    }
+                    if (currentNode != null) {
+                        return;
+                    }
+                }
+                currentBucketIndex++;
+            }
+        }
+
         @Override
         public boolean hasNext() {
-
-            return false;
+            return currentNode != null;
         }
 
         @Override
         public Entity next() {
-            return null;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Entity entity = currentNode.value;
+            currentNode = currentNode.next;
+            if (currentNode == null) {
+                currentBucketIndex++;
+                findNextValidNode();
+            }
+            return entity;
         }
     }
 
