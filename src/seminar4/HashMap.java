@@ -1,13 +1,16 @@
 package seminar4;
 
 import java.util.Iterator;
-import java.util.Map;
 
 public class HashMap<K, V> implements Iterable<HashMap.Entity> {
+
+
     private static final int INIT_BUCKET_COUNT = 16;
     private static final double LOAD_FACTOR = 0.5;
+
     private Bucket[] buckets;
     private int size;
+
 
     @Override
     public Iterator<HashMap.Entity> iterator() {
@@ -15,6 +18,7 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
     }
 
     class HashMapIterator implements Iterator<HashMap.Entity> {
+
         /**
          * TODO: Необходимо доработать структуру класса HashMap, реализованную на семинаре.
          * У нас появились методы добавления, удаления и поиска элемента по ключу.
@@ -22,10 +26,12 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
          * необходимо добавить несколько элементов,
          * а затем перебрать все элементы таблицы используя цикл foreach.
          * Подумайте, возможно вам стоит обратиться к интерфейсу Iterable.
+         *
+         * @return
          */
-
         @Override
         public boolean hasNext() {
+
             return false;
         }
 
@@ -35,21 +41,23 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
         }
     }
 
+
     /**
      * TODO: Вывести все элементы хеш-таблицы на экран через toString()
      *
      * @return
      */
-
     @Override
     public String toString() {
         return super.toString();
     }
 
+
     /**
      * Элемент хеш-таблицы
      */
     class Entity {
+
         /**
          * Ключ
          */
@@ -59,12 +67,14 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
          * Значение элемента
          */
         V value;
+
     }
 
     /**
      * Бакет, связный список
      */
     class Bucket {
+
         /**
          * Указатель на первый элемент связного списка
          */
@@ -74,14 +84,17 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
          * Узел бакета (связного списка)
          */
         class Node {
+
             /**
              * Указатель на следующий элемент связного списка
              */
             Node next;
+
             /**
              * Значение узла, указывающее на элемент хеш-таблицы
              */
             Entity value;
+
         }
 
         public V add(Entity entity) {
@@ -110,9 +123,8 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
         }
 
         public V remove(K key) {
-            if (head == null) {
+            if (head == null)
                 return null;
-            }
             if (head.value.key.equals(key)) {
                 V buf = head.value.value;
                 head = head.next;
@@ -134,13 +146,13 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
         public V get(K key) {
             Node node = head;
             while (node != null) {
-                if (node.value.key.equals(key)) {
+                if (node.value.key.equals(key))
                     return node.value.value;
-                }
                 node = node.next;
             }
             return null;
         }
+
     }
 
     private int calculateBucketIndex(K key) {
@@ -167,7 +179,6 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
         if (size >= buckets.length * LOAD_FACTOR) {
             recalculate();
         }
-
         int index = calculateBucketIndex(key);
         Bucket bucket = buckets[index];
         if (bucket == null) {
@@ -189,18 +200,16 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
     public V get(K key) {
         int index = calculateBucketIndex(key);
         Bucket bucket = buckets[index];
-        if (bucket == null) {
+        if (bucket == null)
             return null;
-        }
         return bucket.get(key);
     }
 
     public V remove(K key) {
         int index = calculateBucketIndex(key);
         Bucket bucket = buckets[index];
-        if (bucket == null) {
+        if (bucket == null)
             return null;
-        }
         V buf = bucket.remove(key);
         if (buf != null) {
             size--;
@@ -215,5 +224,6 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
     public HashMap(int initCount) {
         buckets = new HashMap.Bucket[initCount];
     }
-}
 
+
+}
