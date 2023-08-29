@@ -90,8 +90,6 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
             sb.append(entity.key).append(" Value: ").append(entity.value);
             first = false;
         }
-
-//        sb.append("}");
         return sb.toString();
     }
 
