@@ -162,5 +162,58 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
             }
         }
     }
-    
+
+    public V put(K key, V value) {
+        if (size >= buckets.length * LOAD_FACTOR) {
+            recalculate();
+        }
+
+        int index = calculateBucketIndex(key);
+        Bucket bucket = buckets[index];
+        if (bucket == null) {
+            bucket = new Bucket();
+            buckets[index] = bucket;
+        }
+
+        Entity entity = new Entity();
+        entity.key = key;
+        entity.value = value;
+
+        V buf = bucket.add(entity);
+        if (buf == null) {
+            size++;
+        }
+        return buf;
+    }
+
+    public V get(K key) {
+        int index = calculateBucketIndex(key);
+        Bucket bucket = buckets[index];
+        if (bucket == null) {
+            return null;
+        }
+        return bucket.get(key);
+    }
+
+    public V remove(K key) {
+        int index = calculateBucketIndex(key);
+        Bucket bucket = buckets[index];
+        if (bucket == null) {
+            return null;
+        }
+        V buf = bucket.remove(key);
+        if (buf != null) {
+            size--;
+        }
+        return buf;
+    }
+
+    public HashMap() {
+        buckets = new HashMap.Bucket[INIT_BUCKET_COUNT];
+    }
+
+    public HashMap(int initCount) {
+        buckets = new HashMap.Bucket[initCount];
+    }
 }
+
