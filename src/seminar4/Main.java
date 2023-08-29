@@ -1,6 +1,5 @@
 package seminar4;
 
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,10 +16,12 @@ public class Main {
         hashMap.put("+79007774439", "CCCCCCC7");
         hashMap.put("+79007774440", "CCCCCCC8");
 
-        for (Map.Entry<String, String> entry : hashMap) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            System.out.println("Key: " + key + ", Value: " + value);
+        for (HashMap<String, String>.Entity element : hashMap) {
+            System.out.printf("%s - %s\n", element.key, element.value);
         }
+
+        System.out.println();
+
+        System.out.println(hashMap);
     }
 }

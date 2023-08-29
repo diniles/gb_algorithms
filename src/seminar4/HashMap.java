@@ -1,11 +1,9 @@
 package seminar4;
 
-import java.util.AbstractMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
-public class HashMap<K, V> implements Iterable<Map.Entry<K, V>> {
+public class HashMap<K, V> implements Iterable<HashMap.Entity> {
     private static final int INIT_BUCKET_COUNT = 16;
     private static final double LOAD_FACTOR = 0.5;
 
@@ -14,22 +12,21 @@ public class HashMap<K, V> implements Iterable<Map.Entry<K, V>> {
 
 
     @Override
-    public Iterator<Map.Entry<K, V>> iterator() {
+    public Iterator<HashMap.Entity> iterator() {
         return new HashMapIterator();
     }
 
-    class HashMapIterator implements Iterator<Map.Entry<K, V>> {
 
-        /**
-         * TODO: Необходимо доработать структуру класса HashMap, реализованную на семинаре.
-         * У нас появились методы добавления, удаления и поиска элемента по ключу.
-         * Добавить возможность перебора всех элементов нашей структуры данных,
-         * необходимо добавить несколько элементов,
-         * а затем перебрать все элементы таблицы используя цикл foreach.
-         * Подумайте, возможно вам стоит обратиться к интерфейсу Iterable.
-         *
-         * @return
-         */
+    /**
+     * TODO: Необходимо доработать структуру класса HashMap, реализованную на семинаре.
+     * У нас появились методы добавления, удаления и поиска элемента по ключу.
+     * Добавить возможность перебора всех элементов нашей структуры данных,
+     * необходимо добавить несколько элементов,
+     * а затем перебрать все элементы таблицы используя цикл foreach.
+     * Подумайте, возможно вам стоит обратиться к интерфейсу Iterable.
+     */
+    class HashMapIterator implements Iterator<HashMap.Entity> {
+
         private int currentBucketIndex;
         private Bucket.Node currentNode;
 
@@ -62,7 +59,7 @@ public class HashMap<K, V> implements Iterable<Map.Entry<K, V>> {
         }
 
         @Override
-        public Map.Entry<K, V> next() {
+        public Entity next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
@@ -72,31 +69,29 @@ public class HashMap<K, V> implements Iterable<Map.Entry<K, V>> {
                 currentBucketIndex++;
                 findNextValidNode();
             }
-            return new AbstractMap.SimpleEntry<>(entity.key, entity.value);
+            return entity;
         }
     }
 
 
     /**
      * TODO: Вывести все элементы хеш-таблицы на экран через toString()
-     *
-     * @return
      */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{");
+        sb.append("Key: ");
 
         boolean first = true;
-        for (Map.Entry<K, V> entry : this) {
+        for (Entity entity : this) {
             if (!first) {
-                sb.append(", ");
+                sb.append("\nKey: ");
             }
-            sb.append(entry.getKey()).append("=").append(entry.getValue());
+            sb.append(entity.key).append(" Value: ").append(entity.value);
             first = false;
         }
 
-        sb.append("}");
+//        sb.append("}");
         return sb.toString();
     }
 
