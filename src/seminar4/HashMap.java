@@ -1,11 +1,11 @@
 package seminar4;
 
+import java.util.AbstractMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
-public class HashMap<K, V> implements Iterable<HashMap.Entity> {
-
-
+public class HashMap<K, V> implements Iterable<Map.Entry<K, V>> {
     private static final int INIT_BUCKET_COUNT = 16;
     private static final double LOAD_FACTOR = 0.5;
 
@@ -14,11 +14,11 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
 
 
     @Override
-    public Iterator<HashMap.Entity> iterator() {
+    public Iterator<Map.Entry<K, V>> iterator() {
         return new HashMapIterator();
     }
 
-    class HashMapIterator implements Iterator<HashMap.Entity> {
+    class HashMapIterator implements Iterator<Map.Entry<K, V>> {
 
         /**
          * TODO: Необходимо доработать структуру класса HashMap, реализованную на семинаре.
@@ -62,7 +62,7 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
         }
 
         @Override
-        public Entity next() {
+        public Map.Entry<K, V> next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
@@ -72,7 +72,7 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
                 currentBucketIndex++;
                 findNextValidNode();
             }
-            return entity;
+            return new AbstractMap.SimpleEntry<>(entity.key, entity.value);
         }
     }
 
@@ -88,11 +88,11 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
         sb.append("{");
 
         boolean first = true;
-        for (Entity entity : this) {
+        for (Map.Entry<K, V> entry : this) {
             if (!first) {
                 sb.append(", ");
             }
-            sb.append(entity.key).append("=").append(entity.value);
+            sb.append(entry.getKey()).append("=").append(entry.getValue());
             first = false;
         }
 
