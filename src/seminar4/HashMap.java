@@ -49,7 +49,20 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
      */
     @Override
     public String toString() {
-        return super.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+
+        boolean first = true;
+        for (Entity entity : this) {
+            if (!first) {
+                sb.append(", ");
+            }
+            sb.append(entity.key).append("=").append(entity.value);
+            first = false;
+        }
+
+        sb.append("}");
+        return sb.toString();
     }
 
 
@@ -224,6 +237,5 @@ public class HashMap<K, V> implements Iterable<HashMap.Entity> {
     public HashMap(int initCount) {
         buckets = new HashMap.Bucket[initCount];
     }
-
 
 }
